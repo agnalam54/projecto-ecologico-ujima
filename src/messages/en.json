@@ -1,0 +1,42 @@
+{
+  "nav": {
+    "home": "Home",
+    "info": "Information",
+    "contact": "Contact",
+    "about": "About Us",
+    "admin": "Admin"
+  },
+  "home": {
+    "hero_title": "Projecto Ecológico UJIMA",
+    "hero_subtitle": "A community-led environmental initiative for the future of Angola",
+    "hero_cta": "Learn More",
+    "services_title": "Our Services",
+    "events_title": "Upcoming Events",
+    "news_title": "Latest News",
+    "no_events": "No upcoming events.",
+    "no_news": "No news available.",
+    "read_more": "Read More"
+  },
+  "info": {
+    "title": "Information & Services",
+    "subtitle": "Learn about what we do for our community and the environment"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Get in touch with us",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send Message",
+    "success": "Message sent successfully!",
+    "error": "Error sending message. Please try again."
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "Learn about our history and mission"
+  },
+  "footer": {
+    "rights": "All rights reserved",
+    "tagline": "Together for a greener future"
+  }
+}

@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+:root {
+  --ujima-dark: #131F14;
+  --ujima-green: #2D6A4F;
+  --ujima-green-light: #52B788;
+  --ujima-yellow: #F4C430;
+  --ujima-yellow-light: #FFE066;
+  --ujima-cream: #F9F7F0;
+}
+
+@theme inline {
+  --color-ujima-dark: var(--ujima-dark);
+  --color-ujima-green: var(--ujima-green);
+  --color-ujima-green-light: var(--ujima-green-light);
+  --color-ujima-yellow: var(--ujima-yellow);
+  --color-ujima-yellow-light: var(--ujima-yellow-light);
+  --color-ujima-cream: var(--ujima-cream);
+}
+
+body {
+  background: var(--ujima-cream);
+  color: var(--ujima-dark);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}

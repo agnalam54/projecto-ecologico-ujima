@@ -1,0 +1,46 @@
+{
+  "home": {
+    "hero_image": "",
+    "services": [
+      {
+        "id": 1,
+        "icon": "🌱",
+        "title_pt": "Reflorestação",
+        "title_en": "Reforestation",
+        "desc_pt": "Plantamos árvores e restauramos ecossistemas degradados nas comunidades angolanas.",
+        "desc_en": "We plant trees and restore degraded ecosystems in Angolan communities."
+      },
+      {
+        "id": 2,
+        "icon": "♻️",
+        "title_pt": "Gestão de Resíduos",
+        "title_en": "Waste Management",
+        "desc_pt": "Promovemos a reciclagem e a gestão sustentável de resíduos nas comunidades.",
+        "desc_en": "We promote recycling and sustainable waste management in communities."
+      },
+      {
+        "id": 3,
+        "icon": "🌊",
+        "title_pt": "Conservação da Água",
+        "title_en": "Water Conservation",
+        "desc_pt": "Trabalhamos para proteger e conservar os recursos hídricos locais.",
+        "desc_en": "We work to protect and conserve local water resources."
+      }
+    ]
+  },
+  "info": {
+    "content_pt": "O Projecto Ecológico UJIMA é uma iniciativa comunitária dedicada à preservação ambiental e ao desenvolvimento sustentável em Angola. Através dos nossos programas e actividades, trabalhamos para criar um futuro mais verde e sustentável para as nossas comunidades.",
+    "content_en": "Projecto Ecológico UJIMA is a community initiative dedicated to environmental preservation and sustainable development in Angola. Through our programs and activities, we work to create a greener and more sustainable future for our communities."
+  },
+  "about": {
+    "content_pt": "Fundado com o espírito de UJIMA — um conceito africano que significa trabalho colectivo e responsabilidade — o nosso projecto nasceu da necessidade de proteger o ambiente angolano para as gerações futuras. A nossa equipa é composta por voluntários apaixonados e profissionais comprometidos com a causa ecológica.",
+    "content_en": "Founded with the spirit of UJIMA — an African concept meaning collective work and responsibility — our project was born from the need to protect the Angolan environment for future generations. Our team is composed of passionate volunteers and professionals committed to the ecological cause.",
+    "team": []
+  },
+  "contact": {
+    "email": "projecto.ujima@gmail.com",
+    "phone": "+244 900 000 000",
+    "address_pt": "Luanda, Angola",
+    "address_en": "Luanda, Angola"
+  }
+}

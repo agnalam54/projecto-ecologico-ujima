@@ -1,0 +1,42 @@
+{
+  "nav": {
+    "home": "Início",
+    "info": "Informação",
+    "contact": "Contacto",
+    "about": "Sobre Nós",
+    "admin": "Admin"
+  },
+  "home": {
+    "hero_title": "Projecto Ecológico UJIMA",
+    "hero_subtitle": "Uma iniciativa comunitária pelo ambiente e pelo futuro de Angola",
+    "hero_cta": "Saiba Mais",
+    "services_title": "Os Nossos Serviços",
+    "events_title": "Próximos Eventos",
+    "news_title": "Últimas Notícias",
+    "no_events": "Nenhum evento próximo.",
+    "no_news": "Nenhuma notícia disponível.",
+    "read_more": "Ler Mais"
+  },
+  "info": {
+    "title": "Informação & Serviços",
+    "subtitle": "Conheça o que fazemos pela nossa comunidade e pelo ambiente"
+  },
+  "contact": {
+    "title": "Contacto",
+    "subtitle": "Entre em contacto connosco",
+    "name": "Nome",
+    "email": "Email",
+    "message": "Mensagem",
+    "send": "Enviar Mensagem",
+    "success": "Mensagem enviada com sucesso!",
+    "error": "Erro ao enviar mensagem. Tente novamente."
+  },
+  "about": {
+    "title": "Sobre Nós",
+    "subtitle": "Conheça a nossa história e missão"
+  },
+  "footer": {
+    "rights": "Todos os direitos reservados",
+    "tagline": "Juntos por um futuro mais verde"
+  }
+}
