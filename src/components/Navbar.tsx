@@ -1,91 +1,87 @@
 'use client';
-
 import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 export default function Navbar({ logoUrl }: { logoUrl?: string }) {
-  const t = useTranslations('nav');
-  const locale = useLocale();
-  const pathname = usePathname();
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const t       = useTranslations('nav');
+  const locale  = useLocale();
+  const path    = usePathname();
+  const [open, setOpen]       = useState(false);
+  const [solid, setSolid]     = useState(false);
 
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 20);
+    const fn = () => setSolid(window.scrollY > 10);
     window.addEventListener('scroll', fn, { passive: true });
     return () => window.removeEventListener('scroll', fn);
   }, []);
 
   const links = [
-    { href: `/${locale}`,         label: t('home') },
-    { href: `/${locale}/info`,    label: t('info') },
-    { href: `/${locale}/about`,   label: t('about') },
+    { href: `/${locale}`,         label: t('home')    },
+    { href: `/${locale}/info`,    label: t('info')    },
+    { href: `/${locale}/about`,   label: t('about')   },
     { href: `/${locale}/contact`, label: t('contact') },
   ];
-  const otherLocale = locale === 'pt' ? 'en' : 'pt';
-  const switchPath  = pathname.replace(`/${locale}`, `/${otherLocale}`);
+  const other = locale === 'pt' ? 'en' : 'pt';
+  const switchTo = path.replace(`/${locale}`, `/${other}`);
 
   return (
     <header
       role="banner"
       style={{
-        backgroundColor: scrolled ? 'rgba(13,51,32,0.97)' : 'var(--g-900)',
-        backdropFilter: scrolled ? 'blur(16px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(187,247,208,0.1)' : '1px solid transparent',
-        transition: 'background 0.3s, border-color 0.3s, backdrop-filter 0.3s',
+        background: solid ? 'rgba(255,255,255,0.97)' : '#fff',
+        borderBottom: `1px solid ${solid ? 'var(--gray-200)' : 'var(--gray-200)'}`,
+        backdropFilter: solid ? 'blur(12px)' : 'none',
+        transition: 'box-shadow .3s',
+        boxShadow: solid ? '0 1px 12px rgba(0,0,0,.08)' : 'none',
       }}
       className="sticky top-0 z-50"
     >
-      {/* Skip link — WCAG 2.4.1 */}
       <a href="#main-content" className="skip-link">
-        {locale === 'pt' ? 'Saltar para o conteúdo' : 'Skip to content'}
+        {locale === 'pt' ? 'Saltar para conteúdo' : 'Skip to content'}
       </a>
 
-      <nav aria-label="Primary navigation" className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between gap-6">
+      <nav aria-label="Primary" className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between gap-6">
+
         {/* Logo */}
-        <Link
-          href={`/${locale}`}
-          aria-label="Projecto Ecológico UJIMA — página inicial"
-          className="flex items-center gap-3 shrink-0 group"
-        >
-          {logoUrl ? (
-            <img src={logoUrl} alt="" aria-hidden="true" className="w-9 h-9 rounded-full object-cover" />
-          ) : (
-            <div
-              aria-hidden="true"
-              style={{ background: 'var(--y-400)', color: 'var(--t-primary)' }}
-              className="w-9 h-9 rounded-full flex items-center justify-center font-black text-base transition-transform group-hover:scale-105"
-            >
-              U
-            </div>
-          )}
-          <span className="hidden sm:flex flex-col leading-none">
-            <span style={{ color: 'var(--g-200)', fontSize: 11, fontWeight: 600, letterSpacing: '0.05em' }}>
+        <Link href={`/${locale}`} aria-label="UJIMA — página inicial" className="flex items-center gap-2.5 shrink-0 group">
+          {logoUrl
+            ? <img src={logoUrl} alt="" aria-hidden="true" className="w-8 h-8 rounded-full object-cover" />
+            : (
+              <div aria-hidden="true" style={{ background: 'var(--yellow)', color: 'var(--gray-900)', width: 34, height: 34, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: 15, flexShrink: 0, transition: 'transform .2s' }} className="group-hover:scale-105">
+                U
+              </div>
+            )
+          }
+          <div className="leading-none">
+            <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--gray-500)', letterSpacing: '.06em', textTransform: 'uppercase' }}>
               Projecto Ecológico
-            </span>
-            <span style={{ color: '#fff', fontSize: 16, fontWeight: 900, letterSpacing: '0.08em' }}>
+            </div>
+            <div style={{ fontSize: 15, fontWeight: 900, color: 'var(--gray-900)', letterSpacing: '.04em' }}>
               UJIMA
-            </span>
-          </span>
+            </div>
+          </div>
         </Link>
 
-        {/* Desktop nav */}
+        {/* Desktop links */}
         <div className="hidden md:flex items-center gap-1">
           {links.map(({ href, label }) => {
-            const active = pathname === href || (href !== `/${locale}` && pathname.startsWith(href));
+            const active = path === href || (href !== `/${locale}` && path.startsWith(href));
             return (
-              <Link
-                key={href}
-                href={href}
-                aria-current={active ? 'page' : undefined}
+              <Link key={href} href={href} aria-current={active ? 'page' : undefined}
                 style={{
-                  color: active ? '#fff' : 'rgba(255,255,255,0.7)',
-                  background: active ? 'rgba(255,255,255,0.1)' : 'transparent',
+                  color: active ? 'var(--green-700)' : 'var(--gray-700)',
+                  fontWeight: active ? 700 : 500,
+                  fontSize: '0.9375rem',
+                  padding: '0.5rem 0.875rem',
                   borderRadius: 8,
+                  textDecoration: 'none',
+                  transition: 'background .15s, color .15s',
+                  background: active ? 'var(--green-50)' : 'transparent',
                 }}
-                className="px-4 py-2 text-sm font-medium transition-all hover:bg-white/10 hover:text-white"
+                onMouseEnter={e => { if (!active) { e.currentTarget.style.background = 'var(--gray-100)'; e.currentTarget.style.color = 'var(--gray-900)'; } }}
+                onMouseLeave={e => { if (!active) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--gray-700)'; } }}
               >
                 {label}
               </Link>
@@ -94,57 +90,45 @@ export default function Navbar({ logoUrl }: { logoUrl?: string }) {
         </div>
 
         <div className="flex items-center gap-3">
-          {/* Language switcher */}
-          <Link
-            href={switchPath}
-            aria-label={`Switch to ${otherLocale === 'pt' ? 'Portuguese' : 'English'}`}
-            style={{ background: 'rgba(255,255,255,0.12)', color: '#fff', borderRadius: 6 }}
-            className="hidden md:flex px-3 py-1.5 text-xs font-bold uppercase tracking-widest hover:bg-white/20 transition-colors"
+          {/* Lang switcher */}
+          <Link href={switchTo} aria-label={`Switch to ${other === 'en' ? 'English' : 'Português'}`}
+            style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--green-700)', border: '1.5px solid var(--green-700)', borderRadius: 100, padding: '0.3rem 0.75rem', textDecoration: 'none', transition: 'background .15s' }}
+            className="hidden md:flex hover:bg-green-50"
           >
-            {otherLocale.toUpperCase()}
+            {other.toUpperCase()}
           </Link>
 
           {/* Mobile hamburger */}
-          <button
-            aria-label={open ? 'Fechar menu' : 'Abrir menu'}
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            onClick={() => setOpen(!open)}
-            style={{ color: '#fff' }}
-            className="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors"
+          <button onClick={() => setOpen(!open)} aria-label={open ? 'Fechar menu' : 'Abrir menu'} aria-expanded={open} aria-controls="mobile-menu"
+            style={{ color: 'var(--gray-700)', padding: '0.375rem', borderRadius: 8, background: 'none', border: 'none', cursor: 'pointer' }}
+            className="md:hidden"
           >
-            <svg aria-hidden="true" className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg aria-hidden="true" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               {open
-                ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />}
+                ? <><line x1="4" y1="4" x2="18" y2="18"/><line x1="18" y1="4" x2="4" y2="18"/></>
+                : <><line x1="3" y1="7" x2="19" y2="7"/><line x1="3" y1="12" x2="19" y2="12"/><line x1="3" y1="17" x2="19" y2="17"/></>
+              }
             </svg>
           </button>
         </div>
       </nav>
 
       {/* Mobile menu */}
-      <div
-        id="mobile-menu"
-        hidden={!open}
-        style={{ borderTop: '1px solid rgba(187,247,208,0.1)', background: 'var(--g-900)' }}
-        className="md:hidden px-6 pb-4 pt-2"
+      <div id="mobile-menu" hidden={!open}
+        style={{ borderTop: '1px solid var(--gray-200)', background: '#fff', padding: '0.75rem 1.5rem 1.25rem' }}
+        className="md:hidden"
       >
         {links.map(({ href, label }) => (
-          <Link
-            key={href}
-            href={href}
-            onClick={() => setOpen(false)}
-            style={{ color: 'rgba(255,255,255,0.85)', display: 'block', padding: '10px 0', fontSize: 15, fontWeight: 500, borderBottom: '1px solid rgba(255,255,255,0.06)' }}
+          <Link key={href} href={href} onClick={() => setOpen(false)}
+            style={{ display: 'block', padding: '0.75rem 0', borderBottom: '1px solid var(--gray-100)', color: 'var(--gray-900)', fontWeight: 500, fontSize: 15, textDecoration: 'none' }}
           >
             {label}
           </Link>
         ))}
-        <Link
-          href={switchPath}
-          onClick={() => setOpen(false)}
-          style={{ color: 'var(--g-200)', display: 'block', paddingTop: 12, fontSize: 13, fontWeight: 700 }}
+        <Link href={switchTo} onClick={() => setOpen(false)}
+          style={{ display: 'block', paddingTop: '1rem', color: 'var(--green-700)', fontWeight: 700, fontSize: 13, textDecoration: 'none' }}
         >
-          {otherLocale.toUpperCase()} — {otherLocale === 'en' ? 'English' : 'Português'}
+          {other.toUpperCase()} — {other === 'en' ? 'English' : 'Português'}
         </Link>
       </div>
     </header>

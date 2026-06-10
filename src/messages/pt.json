@@ -10,33 +10,72 @@
     "hero_title": "Projecto Ecológico UJIMA",
     "hero_subtitle": "Uma iniciativa comunitária pelo ambiente e pelo futuro de Angola",
     "hero_cta": "Saiba Mais",
+    "hero_cta2": "Fale Connosco",
+    "stats_projects": "Projectos Activos",
+    "stats_volunteers": "Voluntários",
+    "stats_communities": "Comunidades",
+    "stats_years": "Anos de Impacto",
+    "services_eyebrow": "O Que Fazemos",
     "services_title": "Os Nossos Serviços",
+    "services_more": "Ver Todos os Serviços",
+    "mission_eyebrow": "A Nossa Missão",
+    "mission_title": "Preservar o ambiente, fortalecer comunidades",
+    "mission_body": "O Projecto Ecológico UJIMA acredita que a sustentabilidade começa nas comunidades locais. Trabalhamos lado a lado com as pessoas para construir um futuro mais verde e resiliente para Angola.",
+    "mission_cta": "Conhecer a Nossa História",
+    "events_eyebrow": "Agenda",
     "events_title": "Próximos Eventos",
+    "events_more": "Ver Todos os Eventos",
+    "news_eyebrow": "Novidades",
     "news_title": "Últimas Notícias",
+    "news_more": "Ver Todas as Notícias",
+    "cta_title": "Faça Parte da Mudança",
+    "cta_body": "Junte-se à nossa comunidade de voluntários e ajude a transformar Angola.",
+    "cta_btn": "Entrar em Contacto",
     "no_events": "Nenhum evento próximo.",
     "no_news": "Nenhuma notícia disponível.",
     "read_more": "Ler Mais"
   },
   "info": {
+    "eyebrow": "Informação",
     "title": "Informação & Serviços",
-    "subtitle": "Conheça o que fazemos pela nossa comunidade e pelo ambiente"
+    "subtitle": "Conheça o que fazemos pela nossa comunidade e pelo ambiente",
+    "intro": "Trabalhamos em diversas áreas para promover um desenvolvimento sustentável em Angola — da educação ambiental à gestão de recursos naturais.",
+    "services_eyebrow": "As Nossas Áreas",
+    "services_title": "Como Actuamos"
   },
   "contact": {
-    "title": "Contacto",
-    "subtitle": "Entre em contacto connosco",
-    "name": "Nome",
-    "email": "Email",
+    "eyebrow": "Contacto",
+    "title": "Entre em Contacto",
+    "subtitle": "Estamos disponíveis para responder às suas questões e receber novas parcerias",
+    "info_heading": "Informações de Contacto",
+    "name": "Nome Completo",
+    "email": "Endereço de Email",
     "message": "Mensagem",
     "send": "Enviar Mensagem",
-    "success": "Mensagem enviada com sucesso!",
-    "error": "Erro ao enviar mensagem. Tente novamente."
+    "success": "Mensagem enviada com sucesso! Entraremos em contacto em breve.",
+    "error": "Erro ao enviar mensagem. Por favor tente novamente."
   },
   "about": {
-    "title": "Sobre Nós",
-    "subtitle": "Conheça a nossa história e missão"
+    "eyebrow": "Sobre Nós",
+    "title": "Quem Somos",
+    "subtitle": "Uma comunidade unida pela protecção do ambiente angolano",
+    "mission_eyebrow": "Missão",
+    "mission_title": "A Nossa Missão",
+    "vision_eyebrow": "Visão",
+    "vision_title": "A Nossa Visão",
+    "values_eyebrow": "Valores",
+    "values_title": "O Que Nos Guia"
   },
   "footer": {
-    "rights": "Todos os direitos reservados",
-    "tagline": "Juntos por um futuro mais verde"
+    "tagline": "Uma iniciativa comunitária dedicada à preservação ambiental em Angola.",
+    "links": "Navegação",
+    "home": "Início",
+    "info": "Informação",
+    "about": "Sobre Nós",
+    "contact": "Contacto",
+    "contact_heading": "Contacto",
+    "mission_heading": "Missão",
+    "mission_text": "Preservar os recursos naturais de Angola e capacitar comunidades para um desenvolvimento sustentável.",
+    "rights": "Todos os direitos reservados."
   }
 }

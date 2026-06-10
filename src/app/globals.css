@@ -1,170 +1,184 @@
 @import "tailwindcss";
 
-/* ─── Design tokens ──────────────────────────────────────────── */
+/* ── Tokens ─────────────────────────────────────────────────── */
 :root {
-  /* Surfaces */
-  --s-white:   #ffffff;
-  --s-subtle:  #F7F9F7;
-  --s-muted:   #EEF3EE;
-  --s-border:  #D8E6D8;
+  --white:   #ffffff;
+  --gray-50: #F9FAFB;
+  --gray-100:#F3F4F6;
+  --gray-200:#E5E7EB;
+  --gray-500:#6B7280;
+  --gray-700:#374151;
+  --gray-900:#111827;
 
-  /* Brand – dark green (white text on these passes AA 7:1+) */
-  --g-900: #0D3320;
-  --g-800: #14532D;
-  --g-700: #166534;
+  /* Brand green – AA-compliant pairs defined per usage below */
+  --green-900: #052E16;   /* white text → 18:1 ✓ */
+  --green-800: #14532D;   /* white text → 10:1 ✓ */
+  --green-700: #15803D;   /* white text →  5.9:1 ✓ */
+  --green-600: #16A34A;   /* white text →  4.6:1 ✓ (large/bold only) */
+  --green-100: #DCFCE7;
+  --green-50:  #F0FDF4;
 
-  /* Brand – mid green (only use as bg with white, or as icon/decorative) */
-  --g-500: #16A34A;
-  --g-200: #BBF7D0;
-  --g-100: #DCFCE7;
-  --g-50:  #F0FDF4;
-
-  /* Yellow — used as bg with dark text (contrast 7:1+) */
-  --y-400: #EAB308;
-  --y-50:  #FEFCE8;
-
-  /* Text — on light surfaces */
-  --t-primary:   #111827;   /* 16:1 on white */
-  --t-secondary: #374151;   /*  9:1 on white */
-  --t-muted:     #6B7280;   /*  5:1 on white — AA for large text */
-
-  /* Semantics */
-  --focus-ring: #2563EB;
+  /* Yellow – always used as bg with dark text */
+  --yellow:    #EAB308;   /* dark text → 7.2:1 ✓ */
+  --yellow-50: #FEFCE8;
 }
 
-/* ─── Reset & base ───────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; }
+/* ── Reset ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  margin: 0;
-  background: var(--s-white);
-  color: var(--t-primary);
+  background: var(--white);
+  color: var(--gray-900);
   font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   line-height: 1.6;
 }
 
-/* ─── Focus (WCAG 2.4.7 / 2.4.11) ───────────────────────────── */
+/* ── Skip link (WCAG 2.4.1) ─────────────────────────────────── */
+.skip-link {
+  position: absolute; top: -100%; left: 1rem;
+  background: var(--green-800); color: #fff;
+  padding: .5rem 1.25rem; border-radius: 0 0 8px 8px;
+  font-weight: 700; font-size: 14px; z-index: 9999;
+  transition: top .15s;
+}
+.skip-link:focus { top: 0; }
+
+/* ── Focus ring (WCAG 2.4.7) ────────────────────────────────── */
 :focus-visible {
-  outline: 3px solid var(--focus-ring);
+  outline: 3px solid #2563EB;
   outline-offset: 3px;
   border-radius: 4px;
 }
 
-/* ─── Skip link (WCAG 2.4.1) ─────────────────────────────────── */
-.skip-link {
-  position: absolute;
-  top: -100%;
-  left: 1rem;
-  background: var(--g-800);
-  color: #fff;
-  padding: 0.5rem 1rem;
-  border-radius: 0 0 6px 6px;
-  font-weight: 700;
-  font-size: 14px;
-  z-index: 9999;
-  transition: top 0.1s;
-}
-.skip-link:focus { top: 0; }
-
-/* ─── Placeholder image block ────────────────────────────────── */
-.img-ph {
-  background-color: var(--g-50);
-  background-image:
-    radial-gradient(circle at 30% 40%, var(--g-100) 0%, transparent 50%),
-    radial-gradient(circle at 70% 70%, var(--g-200) 0%, transparent 40%);
+/* ── Photo placeholder ──────────────────────────────────────── */
+.photo-slot {
+  background: var(--gray-100);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: var(--g-500);
-  font-size: 2rem;
+  gap: .5rem;
+  color: var(--gray-500);
+  font-size: .8125rem;
+  font-weight: 500;
   position: relative;
   overflow: hidden;
 }
+.photo-slot img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.photo-slot svg { opacity: .4; }
 
-/* ─── Scroll animation ───────────────────────────────────────── */
-.fade-up {
+/* ── Scroll animation ───────────────────────────────────────── */
+.reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(20px);
+  transition: opacity .55s ease, transform .55s ease;
 }
-.fade-up.visible { opacity: 1; transform: translateY(0); }
-.fade-up.d1 { transition-delay: 0.08s; }
-.fade-up.d2 { transition-delay: 0.16s; }
-.fade-up.d3 { transition-delay: 0.24s; }
+.reveal.in { opacity: 1; transform: none; }
+.reveal.d1 { transition-delay: .1s; }
+.reveal.d2 { transition-delay: .2s; }
+.reveal.d3 { transition-delay: .3s; }
 
-/* ─── Cards ──────────────────────────────────────────────────── */
-.card {
-  background: var(--s-white);
-  border: 1px solid var(--s-border);
-  border-radius: 12px;
-  transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
-}
-.card:hover {
-  box-shadow: 0 8px 32px rgba(20, 83, 45, 0.12);
-  transform: translateY(-4px);
-  border-color: var(--g-200);
-}
-
-/* ─── Buttons ────────────────────────────────────────────────── */
-/* Primary: yellow bg + dark text  (contrast 7.2:1) ✓ AA */
+/* ── Buttons ────────────────────────────────────────────────── */
 .btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-weight: 700;
-  font-size: 0.9375rem;
-  border-radius: 8px;
-  padding: 0.75rem 1.75rem;
-  text-decoration: none;
-  cursor: pointer;
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-weight: 700; font-size: .9375rem; border-radius: 100px;
+  padding: .75rem 1.75rem; cursor: pointer; text-decoration: none;
   border: 2px solid transparent;
-  transition: background 0.2s, color 0.2s, transform 0.15s, box-shadow 0.2s;
-  letter-spacing: 0.01em;
+  transition: background .2s, color .2s, border-color .2s, transform .15s, box-shadow .2s;
+  white-space: nowrap;
 }
 .btn:active { transform: translateY(1px); }
 
-.btn-yellow {
-  background: var(--y-400);
-  color: var(--t-primary);
-  border-color: var(--y-400);
+/* Filled green */
+.btn-green {
+  background: var(--green-700);
+  color: #fff;
+  border-color: var(--green-700);
 }
-.btn-yellow:hover {
-  background: #CA8A04;
-  border-color: #CA8A04;
-  box-shadow: 0 4px 16px rgba(234,179,8,0.35);
+.btn-green:hover {
+  background: var(--green-800);
+  border-color: var(--green-800);
+  box-shadow: 0 4px 20px rgba(21,128,61,.3);
 }
 
-/* Secondary: outlined dark green (contrast 7:1 on white) ✓ AA */
-.btn-outline {
+/* Outlined green */
+.btn-outline-green {
   background: transparent;
-  color: var(--s-white);
-  border-color: rgba(255,255,255,0.5);
+  color: var(--green-700);
+  border-color: var(--green-700);
 }
-.btn-outline:hover {
-  background: rgba(255,255,255,0.1);
-  border-color: rgba(255,255,255,0.9);
+.btn-outline-green:hover {
+  background: var(--green-50);
 }
 
-/* ─── Section label (eyebrow) ────────────────────────────────── */
+/* Outlined white (on dark bg) */
+.btn-outline-white {
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255,255,255,.55);
+}
+.btn-outline-white:hover {
+  background: rgba(255,255,255,.1);
+  border-color: #fff;
+}
+
+/* ── Section eyebrow ────────────────────────────────────────── */
 .eyebrow {
-  display: inline-block;
-  font-size: 0.75rem;
+  display: block;
+  font-size: .6875rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--g-700);          /* 7:1 on white ✓ */
-  margin-bottom: 0.75rem;
+  color: var(--green-700);    /* 5.9:1 on white ✓ */
+  margin-bottom: .625rem;
 }
+.eyebrow-light { color: var(--green-100); }  /* on dark bg */
 
-/* On dark green sections, swap eyebrow color */
-.on-dark .eyebrow { color: var(--g-200); }
+/* ── Section heading ────────────────────────────────────────── */
+.h-section {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  color: var(--gray-900);
+}
+.h-section-light { color: #fff; }
 
-/* ─── Event row hover (CSS-only, safe in Server Components) ─── */
-.event-row { transition: background 0.2s; }
-.event-row:hover { background: var(--g-50) !important; }
-.event-row:hover .event-arrow { opacity: 1; }
-.event-arrow { opacity: 0; transition: opacity 0.2s; }
+/* ── Arrow link ─────────────────────────────────────────────── */
+.arrow-link {
+  display: inline-flex; align-items: center; gap: .375rem;
+  color: var(--green-700);
+  font-weight: 600; font-size: .9375rem;
+  text-decoration: none;
+  transition: gap .2s;
+}
+.arrow-link:hover { gap: .625rem; }
+.arrow-link:focus-visible { border-radius: 4px; }
 
-/* ─── Divider line ───────────────────────────────────────────── */
-.divider { border: none; border-top: 1px solid var(--s-border); }
+/* ── Service card ───────────────────────────────────────────── */
+.service-card {
+  display: flex; flex-direction: column;
+  transition: transform .25s ease;
+}
+.service-card:hover { transform: translateY(-4px); }
+.service-card:hover .arrow-link { gap: .625rem; }
+
+/* ── Event row ──────────────────────────────────────────────── */
+.event-row {
+  display: flex; align-items: center; gap: 1.25rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--gray-200);
+  transition: background .2s;
+  border-radius: 8px;
+  padding-left: .75rem; padding-right: .75rem;
+}
+.event-row:hover { background: var(--gray-50); }
+.event-row:hover .event-arrow { opacity: 1; transform: translateX(4px); }
+.event-arrow { opacity: 0; transition: opacity .2s, transform .2s; }

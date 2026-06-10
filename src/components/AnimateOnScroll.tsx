@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, ReactNode } from 'react';
 
-export default function Anim({
+export default function Reveal({
   children,
   delay = 0,
   className = '',
@@ -15,14 +15,14 @@ export default function Anim({
     const el = ref.current;
     if (!el) return;
     const io = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { el.classList.add('visible'); io.disconnect(); } },
+      ([e]) => { if (e.isIntersecting) { el.classList.add('in'); io.disconnect(); } },
       { threshold: 0.1 }
     );
     io.observe(el);
     return () => io.disconnect();
   }, []);
   return (
-    <div ref={ref} className={`fade-up ${delay ? `d${delay}` : ''} ${className}`}>
+    <div ref={ref} className={`reveal ${delay ? `d${delay}` : ''} ${className}`}>
       {children}
     </div>
   );
