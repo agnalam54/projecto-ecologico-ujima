@@ -10,5 +10,17 @@
     "title_en": "Tree Planting Day",
     "desc_pt": "Junte-se a nós para um dia de plantação de árvores na comunidade. Venha contribuir para um futuro mais verde!",
     "desc_en": "Join us for a community tree planting day. Come contribute to a greener future!"
+  },
+  {
+    "id": 1781065136628,
+    "date": "2026-06-10",
+    "time": "09:00",
+    "image": "",
+    "location_pt": "Luanda, Angola",
+    "location_en": "Luanda, Angola",
+    "title_pt": "Nova Ideia",
+    "title_en": "New Idea",
+    "desc_pt": "Nessa sessão veremos novas ideias.",
+    "desc_en": "In this session we'll see new ideas."
   }
 ]
