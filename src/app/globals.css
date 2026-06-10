@@ -1,125 +1,170 @@
 @import "tailwindcss";
 
+/* ─── Design tokens ──────────────────────────────────────────── */
 :root {
-  --ujima-dark: #131F14;
-  --ujima-green: #2D6A4F;
-  --ujima-green-mid: #3D8B67;
-  --ujima-green-light: #52B788;
-  --ujima-yellow: #F4C430;
-  --ujima-yellow-light: #FFE066;
-  --ujima-cream: #F9F7F0;
-  --ujima-white: #ffffff;
-  --ujima-gray: #6B7280;
+  /* Surfaces */
+  --s-white:   #ffffff;
+  --s-subtle:  #F7F9F7;
+  --s-muted:   #EEF3EE;
+  --s-border:  #D8E6D8;
+
+  /* Brand – dark green (white text on these passes AA 7:1+) */
+  --g-900: #0D3320;
+  --g-800: #14532D;
+  --g-700: #166534;
+
+  /* Brand – mid green (only use as bg with white, or as icon/decorative) */
+  --g-500: #16A34A;
+  --g-200: #BBF7D0;
+  --g-100: #DCFCE7;
+  --g-50:  #F0FDF4;
+
+  /* Yellow — used as bg with dark text (contrast 7:1+) */
+  --y-400: #EAB308;
+  --y-50:  #FEFCE8;
+
+  /* Text — on light surfaces */
+  --t-primary:   #111827;   /* 16:1 on white */
+  --t-secondary: #374151;   /*  9:1 on white */
+  --t-muted:     #6B7280;   /*  5:1 on white — AA for large text */
+
+  /* Semantics */
+  --focus-ring: #2563EB;
 }
 
-@theme inline {
-  --color-ujima-dark: var(--ujima-dark);
-  --color-ujima-green: var(--ujima-green);
-  --color-ujima-green-light: var(--ujima-green-light);
-  --color-ujima-yellow: var(--ujima-yellow);
-  --color-ujima-cream: var(--ujima-cream);
-}
-
-* { box-sizing: border-box; }
-
+/* ─── Reset & base ───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-
 body {
-  background: var(--ujima-white);
-  color: var(--ujima-dark);
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  margin: 0;
+  background: var(--s-white);
+  color: var(--t-primary);
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
 }
 
-/* Scroll animations */
-.fade-up {
-  opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.fade-up.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-.fade-up.delay-1 { transition-delay: 0.1s; }
-.fade-up.delay-2 { transition-delay: 0.2s; }
-.fade-up.delay-3 { transition-delay: 0.3s; }
-.fade-up.delay-4 { transition-delay: 0.4s; }
-
-/* Card hover */
-.card-hover {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.card-hover:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+/* ─── Focus (WCAG 2.4.7 / 2.4.11) ───────────────────────────── */
+:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
-/* Placeholder image blocks */
-.img-placeholder {
-  background: linear-gradient(135deg, var(--ujima-green) 0%, var(--ujima-dark) 100%);
+/* ─── Skip link (WCAG 2.4.1) ─────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  background: var(--g-800);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0 0 6px 6px;
+  font-weight: 700;
+  font-size: 14px;
+  z-index: 9999;
+  transition: top 0.1s;
+}
+.skip-link:focus { top: 0; }
+
+/* ─── Placeholder image block ────────────────────────────────── */
+.img-ph {
+  background-color: var(--g-50);
+  background-image:
+    radial-gradient(circle at 30% 40%, var(--g-100) 0%, transparent 50%),
+    radial-gradient(circle at 70% 70%, var(--g-200) 0%, transparent 40%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--g-500);
+  font-size: 2rem;
   position: relative;
   overflow: hidden;
 }
-.img-placeholder::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(45deg, rgba(244,196,48,0.15) 0%, transparent 60%);
+
+/* ─── Scroll animation ───────────────────────────────────────── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+.fade-up.d1 { transition-delay: 0.08s; }
+.fade-up.d2 { transition-delay: 0.16s; }
+.fade-up.d3 { transition-delay: 0.24s; }
+
+/* ─── Cards ──────────────────────────────────────────────────── */
+.card {
+  background: var(--s-white);
+  border: 1px solid var(--s-border);
+  border-radius: 12px;
+  transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+.card:hover {
+  box-shadow: 0 8px 32px rgba(20, 83, 45, 0.12);
+  transform: translateY(-4px);
+  border-color: var(--g-200);
 }
 
-/* Button styles */
-.btn-primary {
+/* ─── Buttons ────────────────────────────────────────────────── */
+/* Primary: yellow bg + dark text  (contrast 7.2:1) ✓ AA */
+.btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: var(--ujima-yellow);
-  color: var(--ujima-dark);
+  gap: 0.5rem;
   font-weight: 700;
-  padding: 14px 32px;
-  border-radius: 4px;
-  font-size: 15px;
-  letter-spacing: 0.02em;
-  transition: background 0.2s, transform 0.2s;
-  border: none;
-  cursor: pointer;
+  font-size: 0.9375rem;
+  border-radius: 8px;
+  padding: 0.75rem 1.75rem;
   text-decoration: none;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: background 0.2s, color 0.2s, transform 0.15s, box-shadow 0.2s;
+  letter-spacing: 0.01em;
 }
-.btn-primary:hover {
-  background: var(--ujima-yellow-light);
-  transform: translateY(-1px);
+.btn:active { transform: translateY(1px); }
+
+.btn-yellow {
+  background: var(--y-400);
+  color: var(--t-primary);
+  border-color: var(--y-400);
+}
+.btn-yellow:hover {
+  background: #CA8A04;
+  border-color: #CA8A04;
+  box-shadow: 0 4px 16px rgba(234,179,8,0.35);
 }
 
+/* Secondary: outlined dark green (contrast 7:1 on white) ✓ AA */
 .btn-outline {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
   background: transparent;
-  color: var(--ujima-cream);
-  font-weight: 600;
-  padding: 13px 30px;
-  border-radius: 4px;
-  font-size: 15px;
-  border: 2px solid rgba(255,255,255,0.4);
-  transition: border-color 0.2s, background 0.2s;
-  text-decoration: none;
+  color: var(--s-white);
+  border-color: rgba(255,255,255,0.5);
 }
 .btn-outline:hover {
-  border-color: var(--ujima-yellow);
-  color: var(--ujima-yellow);
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.9);
 }
 
-/* Section label */
-.section-label {
-  font-size: 11px;
+/* ─── Section label (eyebrow) ────────────────────────────────── */
+.eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--ujima-green-light);
+  color: var(--g-700);          /* 7:1 on white ✓ */
+  margin-bottom: 0.75rem;
 }
 
-/* Stat counter */
-@keyframes countUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
+/* On dark green sections, swap eyebrow color */
+.on-dark .eyebrow { color: var(--g-200); }
+
+/* ─── Event row hover (CSS-only, safe in Server Components) ─── */
+.event-row { transition: background 0.2s; }
+.event-row:hover { background: var(--g-50) !important; }
+.event-row:hover .event-arrow { opacity: 1; }
+.event-arrow { opacity: 0; transition: opacity 0.2s; }
+
+/* ─── Divider line ───────────────────────────────────────────── */
+.divider { border: none; border-top: 1px solid var(--s-border); }

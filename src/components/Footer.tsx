@@ -5,68 +5,81 @@ import Link from 'next/link';
 
 export default function Footer() {
   const locale = useLocale();
+  const isPt   = locale === 'pt';
 
   const links = [
-    { href: `/${locale}`, label_pt: 'Início', label_en: 'Home' },
-    { href: `/${locale}/info`, label_pt: 'Informação', label_en: 'Information' },
-    { href: `/${locale}/about`, label_pt: 'Sobre Nós', label_en: 'About Us' },
-    { href: `/${locale}/contact`, label_pt: 'Contacto', label_en: 'Contact' },
+    { href: `/${locale}`,         pt: 'Início',     en: 'Home'        },
+    { href: `/${locale}/info`,    pt: 'Informação', en: 'Information' },
+    { href: `/${locale}/about`,   pt: 'Sobre Nós',  en: 'About Us'    },
+    { href: `/${locale}/contact`, pt: 'Contacto',   en: 'Contact'     },
   ];
 
   return (
-    <footer style={{ backgroundColor: 'var(--ujima-dark)', color: 'var(--ujima-cream)' }}>
-      {/* Main footer */}
-      <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-4 gap-10">
-        {/* Brand */}
-        <div className="md:col-span-2">
-          <div className="flex items-center gap-3 mb-4">
-            <div style={{ backgroundColor: 'var(--ujima-yellow)', color: 'var(--ujima-dark)' }} className="w-10 h-10 rounded-full flex items-center justify-center font-black text-lg">U</div>
-            <div>
-              <div className="font-bold text-sm leading-tight">Projecto Ecológico</div>
-              <div style={{ color: 'var(--ujima-yellow)' }} className="font-black text-base uppercase tracking-wider">UJIMA</div>
+    <footer role="contentinfo" style={{ background: 'var(--g-900)', color: '#fff' }}>
+      <div className="max-w-7xl mx-auto px-6 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+          {/* Brand */}
+          <div className="md:col-span-2">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+              <div aria-hidden="true" style={{ background: 'var(--y-400)', color: 'var(--t-primary)', width: 36, height: 36, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '1rem', flexShrink: 0 }}>U</div>
+              <div>
+                <div style={{ color: 'var(--g-200)', fontSize: 11, fontWeight: 600, letterSpacing: '0.05em' }}>Projecto Ecológico</div>
+                <div style={{ color: '#fff', fontSize: 15, fontWeight: 900, letterSpacing: '0.08em' }}>UJIMA</div>
+              </div>
             </div>
+            <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.875rem', lineHeight: 1.75, maxWidth: '32ch' }}>
+              {isPt ? 'Uma iniciativa comunitária dedicada à preservação ambiental e ao desenvolvimento sustentável em Angola.'
+                     : 'A community initiative dedicated to environmental preservation and sustainable development in Angola.'}
+            </p>
           </div>
-          <p style={{ color: 'rgba(249,247,240,0.6)' }} className="text-sm leading-relaxed max-w-xs">
-            {locale === 'pt' ? 'Uma iniciativa comunitária dedicada à preservação ambiental e ao desenvolvimento sustentável em Angola.' : 'A community initiative dedicated to environmental preservation and sustainable development in Angola.'}
-          </p>
-        </div>
 
-        {/* Links */}
-        <div>
-          <h4 style={{ color: 'var(--ujima-yellow)' }} className="text-xs font-black uppercase tracking-widest mb-4">
-            {locale === 'pt' ? 'Navegação' : 'Navigation'}
-          </h4>
-          <div className="flex flex-col gap-3">
-            {links.map(l => (
-              <Link key={l.href} href={l.href} style={{ color: 'rgba(249,247,240,0.7)' }} className="text-sm hover:opacity-100 transition-opacity hover:text-yellow-300">
-                {locale === 'pt' ? l.label_pt : l.label_en}
-              </Link>
-            ))}
-          </div>
-        </div>
+          {/* Nav */}
+          <nav aria-label={isPt ? 'Navegação do rodapé' : 'Footer navigation'}>
+            <h2 style={{ color: 'var(--g-200)', fontSize: '0.6875rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '1rem' }}>
+              {isPt ? 'Navegação' : 'Navigation'}
+            </h2>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.625rem' }}>
+              {links.map(l => (
+                <li key={l.href}>
+                  <Link href={l.href} style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.9375rem', textDecoration: 'none', transition: 'color 0.15s' }}
+                    onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
+                    onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.6)')}
+                  >
+                    {isPt ? l.pt : l.en}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-        {/* Contact */}
-        <div>
-          <h4 style={{ color: 'var(--ujima-yellow)' }} className="text-xs font-black uppercase tracking-widest mb-4">
-            {locale === 'pt' ? 'Contacto' : 'Contact'}
-          </h4>
-          <div className="flex flex-col gap-3 text-sm" style={{ color: 'rgba(249,247,240,0.7)' }}>
-            <span>📧 projecto.ujima@gmail.com</span>
-            <span>📍 Luanda, Angola</span>
+          {/* Contact */}
+          <div>
+            <h2 style={{ color: 'var(--g-200)', fontSize: '0.6875rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '1rem' }}>
+              {isPt ? 'Contacto' : 'Contact'}
+            </h2>
+            <address style={{ fontStyle: 'normal', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <a href="mailto:projecto.ujima@gmail.com" style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.9375rem', textDecoration: 'none' }}
+                onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
+                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.6)')}
+              >
+                projecto.ujima@gmail.com
+              </a>
+              <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.9375rem' }}>Luanda, Angola</span>
+            </address>
           </div>
-          <Link href={`/${locale}/contact`} className="btn-primary mt-6 text-xs px-4 py-2 inline-flex" style={{ fontSize: 12, padding: '8px 20px' }}>
-            {locale === 'pt' ? 'Contacte-nos' : 'Contact us'} →
-          </Link>
         </div>
       </div>
 
       {/* Bottom bar */}
-      <div style={{ borderTop: '1px solid rgba(82,183,136,0.15)' }}>
-        <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p style={{ color: 'rgba(249,247,240,0.4)' }} className="text-xs">
-            © {new Date().getFullYear()} Projecto Ecológico UJIMA. {locale === 'pt' ? 'Todos os direitos reservados.' : 'All rights reserved.'}
+      <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+        <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+          <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.8125rem' }}>
+            © {new Date().getFullYear()} Projecto Ecológico UJIMA. {isPt ? 'Todos os direitos reservados.' : 'All rights reserved.'}
           </p>
-          <Link href="/admin" style={{ color: 'rgba(249,247,240,0.3)' }} className="text-xs hover:opacity-70 transition-opacity">
+          <Link href="/admin" style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.75rem', textDecoration: 'none' }}
+            onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.5)')}
+            onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.2)')}
+          >
             Admin
           </Link>
         </div>

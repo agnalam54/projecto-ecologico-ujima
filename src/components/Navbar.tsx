@@ -4,135 +4,149 @@ import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 
 export default function Navbar({ logoUrl }: { logoUrl?: string }) {
   const t = useTranslations('nav');
   const locale = useLocale();
   const pathname = usePathname();
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    const fn = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', fn, { passive: true });
+    return () => window.removeEventListener('scroll', fn);
   }, []);
 
-  const navLinks = [
-    { href: `/${locale}`, label: t('home') },
-    { href: `/${locale}/info`, label: t('info') },
-    { href: `/${locale}/about`, label: t('about') },
+  const links = [
+    { href: `/${locale}`,         label: t('home') },
+    { href: `/${locale}/info`,    label: t('info') },
+    { href: `/${locale}/about`,   label: t('about') },
     { href: `/${locale}/contact`, label: t('contact') },
   ];
-
   const otherLocale = locale === 'pt' ? 'en' : 'pt';
-  const switchPath = pathname.replace(`/${locale}`, `/${otherLocale}`);
+  const switchPath  = pathname.replace(`/${locale}`, `/${otherLocale}`);
 
   return (
-    <nav
+    <header
+      role="banner"
       style={{
-        backgroundColor: scrolled ? 'rgba(19,31,20,0.96)' : 'var(--ujima-dark)',
-        backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        boxShadow: scrolled ? '0 4px 30px rgba(0,0,0,0.3)' : 'none',
-        transition: 'background 0.3s, box-shadow 0.3s',
+        backgroundColor: scrolled ? 'rgba(13,51,32,0.97)' : 'var(--g-900)',
+        backdropFilter: scrolled ? 'blur(16px)' : 'none',
+        borderBottom: scrolled ? '1px solid rgba(187,247,208,0.1)' : '1px solid transparent',
+        transition: 'background 0.3s, border-color 0.3s, backdrop-filter 0.3s',
       }}
       className="sticky top-0 z-50"
     >
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      {/* Skip link — WCAG 2.4.1 */}
+      <a href="#main-content" className="skip-link">
+        {locale === 'pt' ? 'Saltar para o conteúdo' : 'Skip to content'}
+      </a>
+
+      <nav aria-label="Primary navigation" className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between gap-6">
         {/* Logo */}
-        <Link href={`/${locale}`} className="flex items-center gap-3 group">
+        <Link
+          href={`/${locale}`}
+          aria-label="Projecto Ecológico UJIMA — página inicial"
+          className="flex items-center gap-3 shrink-0 group"
+        >
           {logoUrl ? (
-            <Image src={logoUrl} alt="Logo" width={40} height={40} className="rounded-full object-cover w-10 h-10" />
+            <img src={logoUrl} alt="" aria-hidden="true" className="w-9 h-9 rounded-full object-cover" />
           ) : (
             <div
-              style={{ backgroundColor: 'var(--ujima-yellow)', color: 'var(--ujima-dark)' }}
-              className="w-10 h-10 rounded-full flex items-center justify-center font-black text-lg shrink-0 transition-transform group-hover:scale-105"
+              aria-hidden="true"
+              style={{ background: 'var(--y-400)', color: 'var(--t-primary)' }}
+              className="w-9 h-9 rounded-full flex items-center justify-center font-black text-base transition-transform group-hover:scale-105"
             >
               U
             </div>
           )}
-          <div className="hidden sm:block">
-            <div style={{ color: 'var(--ujima-cream)' }} className="font-bold text-sm leading-tight tracking-wide">
+          <span className="hidden sm:flex flex-col leading-none">
+            <span style={{ color: 'var(--g-200)', fontSize: 11, fontWeight: 600, letterSpacing: '0.05em' }}>
               Projecto Ecológico
-            </div>
-            <div style={{ color: 'var(--ujima-yellow)' }} className="font-black text-base leading-tight tracking-wider uppercase">
+            </span>
+            <span style={{ color: '#fff', fontSize: 16, fontWeight: 900, letterSpacing: '0.08em' }}>
               UJIMA
-            </div>
-          </div>
+            </span>
+          </span>
         </Link>
 
-        {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map(({ href, label }) => {
-            const isActive = pathname === href || (href !== `/${locale}` && pathname.startsWith(href));
+        {/* Desktop nav */}
+        <div className="hidden md:flex items-center gap-1">
+          {links.map(({ href, label }) => {
+            const active = pathname === href || (href !== `/${locale}` && pathname.startsWith(href));
             return (
               <Link
                 key={href}
                 href={href}
-                style={{ color: isActive ? 'var(--ujima-yellow)' : 'var(--ujima-cream)' }}
-                className="text-sm font-medium tracking-wide hover:opacity-70 transition-opacity relative group"
+                aria-current={active ? 'page' : undefined}
+                style={{
+                  color: active ? '#fff' : 'rgba(255,255,255,0.7)',
+                  background: active ? 'rgba(255,255,255,0.1)' : 'transparent',
+                  borderRadius: 8,
+                }}
+                className="px-4 py-2 text-sm font-medium transition-all hover:bg-white/10 hover:text-white"
               >
                 {label}
-                <span
-                  style={{ backgroundColor: 'var(--ujima-yellow)' }}
-                  className={`absolute -bottom-1 left-0 h-0.5 transition-all duration-300 ${isActive ? 'w-full' : 'w-0 group-hover:w-full'}`}
-                />
               </Link>
             );
           })}
-
-          <Link
-            href={switchPath}
-            style={{ color: 'var(--ujima-dark)', backgroundColor: 'var(--ujima-yellow)' }}
-            className="px-4 py-1.5 rounded text-xs font-black uppercase tracking-widest hover:opacity-80 transition-opacity"
-          >
-            {otherLocale.toUpperCase()}
-          </Link>
         </div>
 
-        {/* Mobile */}
-        <div className="flex items-center gap-3 md:hidden">
+        <div className="flex items-center gap-3">
+          {/* Language switcher */}
           <Link
             href={switchPath}
-            style={{ color: 'var(--ujima-dark)', backgroundColor: 'var(--ujima-yellow)' }}
-            className="px-3 py-1 rounded text-xs font-black uppercase"
+            aria-label={`Switch to ${otherLocale === 'pt' ? 'Portuguese' : 'English'}`}
+            style={{ background: 'rgba(255,255,255,0.12)', color: '#fff', borderRadius: 6 }}
+            className="hidden md:flex px-3 py-1.5 text-xs font-bold uppercase tracking-widest hover:bg-white/20 transition-colors"
           >
             {otherLocale.toUpperCase()}
           </Link>
-          <button onClick={() => setMenuOpen(!menuOpen)} style={{ color: 'var(--ujima-cream)' }} className="p-1">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {menuOpen
+
+          {/* Mobile hamburger */}
+          <button
+            aria-label={open ? 'Fechar menu' : 'Abrir menu'}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            onClick={() => setOpen(!open)}
+            style={{ color: '#fff' }}
+            className="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors"
+          >
+            <svg aria-hidden="true" className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {open
                 ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />}
             </svg>
           </button>
         </div>
-      </div>
+      </nav>
 
       {/* Mobile menu */}
       <div
-        style={{
-          maxHeight: menuOpen ? '300px' : '0',
-          overflow: 'hidden',
-          transition: 'max-height 0.3s ease',
-          borderTop: menuOpen ? '1px solid rgba(82,183,136,0.2)' : 'none',
-        }}
+        id="mobile-menu"
+        hidden={!open}
+        style={{ borderTop: '1px solid rgba(187,247,208,0.1)', background: 'var(--g-900)' }}
+        className="md:hidden px-6 pb-4 pt-2"
       >
-        <div style={{ backgroundColor: 'var(--ujima-dark)' }} className="px-6 py-4 flex flex-col gap-4">
-          {navLinks.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              style={{ color: 'var(--ujima-cream)' }}
-              className="text-sm font-medium hover:opacity-70 transition-opacity"
-              onClick={() => setMenuOpen(false)}
-            >
-              {label}
-            </Link>
-          ))}
-        </div>
+        {links.map(({ href, label }) => (
+          <Link
+            key={href}
+            href={href}
+            onClick={() => setOpen(false)}
+            style={{ color: 'rgba(255,255,255,0.85)', display: 'block', padding: '10px 0', fontSize: 15, fontWeight: 500, borderBottom: '1px solid rgba(255,255,255,0.06)' }}
+          >
+            {label}
+          </Link>
+        ))}
+        <Link
+          href={switchPath}
+          onClick={() => setOpen(false)}
+          style={{ color: 'var(--g-200)', display: 'block', paddingTop: 12, fontSize: 13, fontWeight: 700 }}
+        >
+          {otherLocale.toUpperCase()} — {otherLocale === 'en' ? 'English' : 'Português'}
+        </Link>
       </div>
-    </nav>
+    </header>
   );
 }

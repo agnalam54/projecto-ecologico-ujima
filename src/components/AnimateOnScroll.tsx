@@ -1,34 +1,28 @@
 'use client';
+import { useEffect, useRef, ReactNode } from 'react';
 
-import { useEffect, useRef } from 'react';
-
-export default function AnimateOnScroll({
+export default function Anim({
   children,
-  className = '',
   delay = 0,
+  className = '',
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
+  delay?: 0 | 1 | 2 | 3;
   className?: string;
-  delay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { el.classList.add('visible'); observer.disconnect(); } },
-      { threshold: 0.12 }
+    const io = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { el.classList.add('visible'); io.disconnect(); } },
+      { threshold: 0.1 }
     );
-    observer.observe(el);
-    return () => observer.disconnect();
+    io.observe(el);
+    return () => io.disconnect();
   }, []);
-
   return (
-    <div
-      ref={ref}
-      className={`fade-up ${delay ? `delay-${delay}` : ''} ${className}`}
-    >
+    <div ref={ref} className={`fade-up ${delay ? `d${delay}` : ''} ${className}`}>
       {children}
     </div>
   );

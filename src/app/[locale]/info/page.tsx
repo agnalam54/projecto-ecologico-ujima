@@ -1,69 +1,69 @@
 import { getTranslations, getLocale } from 'next-intl/server';
-import AnimateOnScroll from '@/components/AnimateOnScroll';
+import Anim from '@/components/AnimateOnScroll';
 import pagesData from '../../../../content/pages.json';
 
 export default async function InfoPage() {
   const locale = await getLocale();
-  const t = await getTranslations('info');
+  const t      = await getTranslations('info');
+  const isPt   = locale === 'pt';
   const { services } = pagesData.home;
-  const content = locale === 'pt' ? pagesData.info.content_pt : pagesData.info.content_en;
+  const content = isPt ? pagesData.info.content_pt : pagesData.info.content_en;
 
   return (
-    <div>
+    <>
       {/* Header */}
-      <section style={{ backgroundColor: 'var(--ujima-dark)' }} className="relative py-32 px-6 overflow-hidden">
-        <div className="absolute inset-0 img-placeholder opacity-30" />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(19,31,20,0.98) 40%, rgba(19,31,20,0.6) 100%)' }} />
-        <div className="relative max-w-7xl mx-auto">
-          <div className="section-label mb-5">{locale === 'pt' ? 'Serviços & Programas' : 'Services & Programmes'}</div>
-          <h1 style={{ color: 'var(--ujima-cream)' }} className="text-5xl md:text-6xl font-black mb-5 max-w-2xl leading-tight">{t('title')}</h1>
-          <p style={{ color: 'var(--ujima-green-light)' }} className="text-lg max-w-xl leading-relaxed">{t('subtitle')}</p>
+      <section aria-labelledby="info-heading" style={{ background: 'linear-gradient(160deg, var(--g-900), var(--g-800))', padding: '5rem 1.5rem 4rem' }} className="on-dark">
+        <div className="max-w-7xl mx-auto">
+          <span className="eyebrow">{isPt ? 'Serviços & Programas' : 'Services & Programmes'}</span>
+          <h1 id="info-heading" style={{ color: '#fff', fontSize: 'clamp(2rem,5vw,3.5rem)', fontWeight: 900, lineHeight: 1.1, marginTop: '0.5rem', maxWidth: '20ch' }}>
+            {t('title')}
+          </h1>
+          <p style={{ color: 'rgba(255,255,255,0.65)', marginTop: '1rem', fontSize: '1.125rem', maxWidth: '45ch', lineHeight: 1.7 }}>
+            {t('subtitle')}
+          </p>
         </div>
       </section>
 
       {/* Intro */}
-      <section className="py-20 px-6 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <AnimateOnScroll>
-            <p style={{ color: 'var(--ujima-dark)', fontSize: 20, lineHeight: 1.8 }}>{content}</p>
-          </AnimateOnScroll>
-        </div>
+      <section style={{ background: 'var(--s-white)', borderBottom: '1px solid var(--s-border)' }} className="py-16 px-6">
+        <Anim>
+          <div className="max-w-3xl mx-auto">
+            <p style={{ color: 'var(--t-secondary)', fontSize: '1.125rem', lineHeight: 1.85 }}>{content}</p>
+          </div>
+        </Anim>
       </section>
 
       {/* Services */}
-      <section style={{ backgroundColor: 'var(--ujima-cream)' }} className="py-20 px-6">
+      <section aria-labelledby="services-heading" style={{ background: 'var(--s-subtle)' }} className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
-          <AnimateOnScroll>
-            <div className="section-label mb-4">{locale === 'pt' ? 'O Que Fazemos' : 'What We Do'}</div>
-            <h2 style={{ color: 'var(--ujima-dark)' }} className="text-4xl font-black mb-16 leading-tight">
-              {locale === 'pt' ? 'Os Nossos Serviços' : 'Our Services'}
+          <Anim>
+            <span className="eyebrow">{isPt ? 'O que fazemos' : 'What we do'}</span>
+            <h2 id="services-heading" style={{ color: 'var(--t-primary)', fontSize: 'clamp(1.5rem,3.5vw,2.25rem)', fontWeight: 900, marginTop: '0.25rem', marginBottom: '2.5rem' }}>
+              {isPt ? 'Os Nossos Serviços' : 'Our Services'}
             </h2>
-          </AnimateOnScroll>
+          </Anim>
 
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-5">
             {services.map((s, i) => (
-              <AnimateOnScroll key={s.id} delay={(Math.min(i + 1, 4)) as 1 | 2 | 3 | 4}>
-                <div
-                  className="bg-white rounded-lg overflow-hidden flex flex-col md:flex-row card-hover"
-                  style={{ border: '1px solid #e5e7eb' }}
-                >
-                  <div className="img-placeholder w-full md:w-64 h-48 md:h-auto shrink-0 flex items-center justify-center">
-                    <span className="text-6xl relative z-10">{s.icon}</span>
+              <Anim key={s.id} delay={(Math.min(i + 1, 3)) as 1|2|3}>
+                <div className="card flex flex-col sm:flex-row overflow-hidden">
+                  <div className="img-ph w-full sm:w-48 h-40 sm:h-auto shrink-0" aria-hidden="true">
+                    <span style={{ fontSize: '2.75rem' }}>{s.icon}</span>
                   </div>
-                  <div className="p-8 flex flex-col justify-center">
-                    <h3 style={{ color: 'var(--ujima-dark)' }} className="text-2xl font-bold mb-3">
-                      {locale === 'pt' ? s.title_pt : s.title_en}
+                  <div style={{ padding: '1.5rem 2rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                    <h3 style={{ color: 'var(--t-primary)', fontWeight: 700, fontSize: '1.25rem', marginBottom: '0.5rem' }}>
+                      {isPt ? s.title_pt : s.title_en}
                     </h3>
-                    <p style={{ color: 'var(--ujima-gray)', lineHeight: 1.8 }}>
-                      {locale === 'pt' ? s.desc_pt : s.desc_en}
+                    <p style={{ color: 'var(--t-secondary)', lineHeight: 1.75 }}>
+                      {isPt ? s.desc_pt : s.desc_en}
                     </p>
                   </div>
                 </div>
-              </AnimateOnScroll>
+              </Anim>
             ))}
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }
