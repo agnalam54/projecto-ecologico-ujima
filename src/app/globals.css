@@ -20,6 +20,9 @@
   --white:     #ffffff;
 }
 
+/* ── Force backgrounds to print correctly ───────────────────── */
+* { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
 /* ── Reset ───────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
