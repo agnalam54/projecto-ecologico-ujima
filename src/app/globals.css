@@ -1,34 +1,31 @@
 @import "tailwindcss";
 
-/* ── Tokens ─────────────────────────────────────────────────── */
+/* ── Brand color tokens (hardcoded — no var() dependency) ───── */
 :root {
-  --white:   #ffffff;
-  --gray-50: #F9FAFB;
-  --gray-100:#F3F4F6;
-  --gray-200:#E5E7EB;
-  --gray-500:#6B7280;
-  --gray-700:#374151;
-  --gray-900:#111827;
-
-  /* Brand green – AA-compliant pairs defined per usage below */
-  --green-900: #052E16;   /* white text → 18:1 ✓ */
-  --green-800: #14532D;   /* white text → 10:1 ✓ */
-  --green-700: #15803D;   /* white text →  5.9:1 ✓ */
-  --green-600: #16A34A;   /* white text →  4.6:1 ✓ (large/bold only) */
+  --green-900: #052E16;
+  --green-800: #14532D;
+  --green-700: #15803D;
+  --green-600: #16A34A;
   --green-100: #DCFCE7;
   --green-50:  #F0FDF4;
-
-  /* Yellow – always used as bg with dark text */
-  --yellow:    #EAB308;   /* dark text → 7.2:1 ✓ */
+  --yellow:    #EAB308;
   --yellow-50: #FEFCE8;
+  --gray-50:   #F9FAFB;
+  --gray-100:  #F3F4F6;
+  --gray-200:  #E5E7EB;
+  --gray-300:  #D1D5DB;
+  --gray-500:  #6B7280;
+  --gray-700:  #374151;
+  --gray-900:  #111827;
+  --white:     #ffffff;
 }
 
-/* ── Reset ──────────────────────────────────────────────────── */
+/* ── Reset ───────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  background: var(--white);
-  color: var(--gray-900);
+  background: #ffffff;
+  color: #111827;
   font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   line-height: 1.6;
@@ -37,7 +34,7 @@ body {
 /* ── Skip link (WCAG 2.4.1) ─────────────────────────────────── */
 .skip-link {
   position: absolute; top: -100%; left: 1rem;
-  background: var(--green-800); color: #fff;
+  background: #14532D; color: #fff;
   padding: .5rem 1.25rem; border-radius: 0 0 8px 8px;
   font-weight: 700; font-size: 14px; z-index: 9999;
   transition: top .15s;
@@ -51,17 +48,23 @@ body {
   border-radius: 4px;
 }
 
+/* ── Hero backgrounds (hardcoded to guarantee rendering) ─────── */
+.bg-hero       { background: #052E16; }
+.bg-hero-mid   { background: #14532D; }
+.bg-yellow-cta { background: #EAB308; }
+
 /* ── Photo placeholder ──────────────────────────────────────── */
 .photo-slot {
-  background: var(--gray-100);
+  background: #EBF5EC;
+  border: 2px dashed #A7D7AC;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: .5rem;
-  color: var(--gray-500);
+  gap: .625rem;
+  color: #4B8454;
   font-size: .8125rem;
-  font-weight: 500;
+  font-weight: 600;
   position: relative;
   overflow: hidden;
 }
@@ -71,8 +74,9 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border: none;
 }
-.photo-slot svg { opacity: .4; }
+.photo-slot-icon { opacity: .55; }
 
 /* ── Scroll animation ───────────────────────────────────────── */
 .reveal {
@@ -96,50 +100,53 @@ body {
 }
 .btn:active { transform: translateY(1px); }
 
-/* Filled green */
+/* Filled green — contrast: white on #15803D = 5.9:1 ✓ */
 .btn-green {
-  background: var(--green-700);
-  color: #fff;
-  border-color: var(--green-700);
+  background: #15803D;
+  color: #ffffff;
+  border-color: #15803D;
 }
 .btn-green:hover {
-  background: var(--green-800);
-  border-color: var(--green-800);
-  box-shadow: 0 4px 20px rgba(21,128,61,.3);
+  background: #14532D;
+  border-color: #14532D;
+  box-shadow: 0 4px 20px rgba(21,128,61,.35);
 }
 
-/* Outlined green */
+/* Outlined green — contrast: #15803D on white = 5.9:1 ✓ */
 .btn-outline-green {
   background: transparent;
-  color: var(--green-700);
-  border-color: var(--green-700);
+  color: #15803D;
+  border-color: #15803D;
 }
 .btn-outline-green:hover {
-  background: var(--green-50);
+  background: #F0FDF4;
 }
 
-/* Outlined white (on dark bg) */
+/* Outlined white — on dark bg */
 .btn-outline-white {
   background: transparent;
-  color: #fff;
-  border-color: rgba(255,255,255,.55);
+  color: #ffffff;
+  border-color: rgba(255,255,255,.7);
 }
 .btn-outline-white:hover {
-  background: rgba(255,255,255,.1);
-  border-color: #fff;
+  background: rgba(255,255,255,.12);
+  border-color: #ffffff;
 }
 
-/* ── Section eyebrow ────────────────────────────────────────── */
+/* ── Eyebrow text ───────────────────────────────────────────── */
 .eyebrow {
   display: block;
   font-size: .6875rem;
   font-weight: 700;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--green-700);    /* 5.9:1 on white ✓ */
-  margin-bottom: .625rem;
+  color: #15803D;    /* 5.9:1 on white ✓ */
+  margin-bottom: .5rem;
 }
-.eyebrow-light { color: var(--green-100); }  /* on dark bg */
+/* On dark hero background */
+.eyebrow-light {
+  color: #DCFCE7;    /* near-white on #052E16 = 14:1 ✓ */
+}
 
 /* ── Section heading ────────────────────────────────────────── */
 .h-section {
@@ -147,20 +154,19 @@ body {
   font-weight: 900;
   line-height: 1.1;
   letter-spacing: -.02em;
-  color: var(--gray-900);
+  color: #111827;
 }
-.h-section-light { color: #fff; }
+.h-section-light { color: #ffffff; }
 
 /* ── Arrow link ─────────────────────────────────────────────── */
 .arrow-link {
   display: inline-flex; align-items: center; gap: .375rem;
-  color: var(--green-700);
+  color: #15803D;
   font-weight: 600; font-size: .9375rem;
   text-decoration: none;
   transition: gap .2s;
 }
 .arrow-link:hover { gap: .625rem; }
-.arrow-link:focus-visible { border-radius: 4px; }
 
 /* ── Service card ───────────────────────────────────────────── */
 .service-card {
@@ -168,17 +174,15 @@ body {
   transition: transform .25s ease;
 }
 .service-card:hover { transform: translateY(-4px); }
-.service-card:hover .arrow-link { gap: .625rem; }
 
 /* ── Event row ──────────────────────────────────────────────── */
 .event-row {
   display: flex; align-items: center; gap: 1.25rem;
-  padding: 1.25rem 0;
-  border-bottom: 1px solid var(--gray-200);
+  padding: 1.25rem .75rem;
+  border-bottom: 1px solid #E5E7EB;
   transition: background .2s;
   border-radius: 8px;
-  padding-left: .75rem; padding-right: .75rem;
 }
-.event-row:hover { background: var(--gray-50); }
+.event-row:hover { background: #F9FAFB; }
 .event-row:hover .event-arrow { opacity: 1; transform: translateX(4px); }
 .event-arrow { opacity: 0; transition: opacity .2s, transform .2s; }
